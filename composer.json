@@ -1,0 +1,17 @@
+{
+    "name": "jcove/laravel-admin",
+    "type": "library",
+    "require": {},
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Jcove\\Admin\\AdminServiceProvider"
+            ]
+        }
+    },
+    "autoload": {
+        "files": [
+            "src/helpers.php"
+        ]
+    }
+}
