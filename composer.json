@@ -1,7 +1,9 @@
 {
     "name": "jcove/laravel-admin",
     "type": "library",
-    "require": {},
+    "require": {
+        "illuminate/support": "^5.1"
+    },
     "extra": {
         "laravel": {
             "providers": [
