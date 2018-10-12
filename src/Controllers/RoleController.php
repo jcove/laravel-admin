@@ -74,8 +74,9 @@ class RoleController extends Controller
     protected function syncPermissions(){
         if($this->permissions){
             $this->model                    =   $this->model->syncPermissions($this->permissions);
+        }else{
+            $this->model->permissions()->detach();
         }
-        dump($this->permissions);
     }
 
     protected function validatePermissions($permissions){

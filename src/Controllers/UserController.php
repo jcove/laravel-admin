@@ -33,8 +33,8 @@ class UserController extends Controller
     protected function validator($data){
         if(request()->method()== "PUT"){
             $rules['username']                      =   'required|unique:admin_users,id,'.request()->id;
-            $rules['password']                      =   'between:6,60|confirmed';
-            $rules['password_confirmation']         =   'between:6,60';
+            $rules['password']                      =   'required|between:6,60|confirmed';
+            $rules['password_confirmation']         =   'required|between:6,60';
         }else{
             $rules['username']                      =   'required|unique:admin_users';
             $rules['password']                      =   'required|between:6,60|confirmed';
@@ -87,11 +87,14 @@ class UserController extends Controller
 
     }
     protected function beforeUpdate(){
+        $this->validator(request()->all())->validate();
         if(request()->password == $this->model->getOriginal('password')) {
             $this->model->offsetUnset('password');
         }elseif($this->model->getAttribute('password')){
             $this->model->password           =    bcrypt(request()->password);
         }
+        $this->validateRoles(request()->roles);
+        $this->validatePermissions(request()->permissions);
 
     }
     protected function updated(){
