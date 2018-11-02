@@ -10,6 +10,8 @@ namespace Jcove\Admin\Controllers;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
+use Jcove\Admin\Exceptions\AdminException;
+use Jcove\Admin\Facades\Admin;
 use Jcove\Restful\Restful;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -86,7 +88,14 @@ class UserController extends Controller
         $this->givePermissionTo();
 
     }
+
+    /**
+     * @throws AdminException
+     */
     protected function beforeUpdate(){
+        if(Admin::id(config('admin.api_guard'))==request()->id && Admin::id(config('admin.api_guard')) !== 1){
+            throw new AdminException(trans('admin.can_not_update_your_self'));
+        }
         $this->validator(request()->all())->validate();
         if(request()->password == $this->model->getOriginal('password')) {
             $this->model->offsetUnset('password');
@@ -138,4 +147,6 @@ class UserController extends Controller
             $this->model                    =   $this->model->syncPermissions($this->permissions);
         }
     }
+
+
 }

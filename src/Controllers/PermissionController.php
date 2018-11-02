@@ -60,7 +60,7 @@ class PermissionController extends Controller
     }
     protected function where(){
         $where                      =   [];
-        if($parent = request()->parent_id){
+        if(($parent = request()->parent_id) !==null){
             $where['parent_id']     =   $parent;
         }
         return $where;

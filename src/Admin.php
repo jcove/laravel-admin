@@ -34,11 +34,14 @@ class Admin
                 $router->post('login','Auth\LoginController@doLogin')->name('admin.login');
                 $router->post('role/givePermission/{roleId?}','RoleController@givePermission');
                 $router->get('permission/tree','PermissionController@tree');
+                $router->get('role/limit','RoleController@limitRoles');
                 $router->resource('role','RoleController')->middleware('permission:Role Manage','role:admin');
                 $router->resource('permission','PermissionController')->middleware('permission:Permission Manage','role:admin');
                 $router->resource('admin','UserController')->middleware('permission:Admin Manage','role:admin');
                 $router->get('my/permission','Auth\MyController@permission');
                 $router->get('my/role','Auth\MyController@role');
+                $router->get('my','Auth\MyController@my');
+                $router->put('my/modify/{id}','Auth\MyController@modify');
 
             });
 

@@ -15,7 +15,9 @@ class AdminUser extends User
 {
     use HasRoles;
     protected $guard_name = 'admin_api';
-
+    protected $hidden = [
+        'remember_token'
+    ];
     public function generateToken()
     {
         $this->admin_token = str_random(60);

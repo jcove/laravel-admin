@@ -90,4 +90,15 @@ class RoleController extends Controller
     protected function beforeShow(){
         $this->model->permissions                   =   $this->model->permissions;
     }
+    public function limitRoles(){
+        $user                                         =   Admin::user(config('admin.api_guard'));
+        $roles                                      =   [];
+        if($user->id!=1){
+            $roles                                  =   $user->roles;
+        }else{
+            $roles                                  =   Role::all();
+        }
+        $this->data['data']                                 =   $roles;
+        return $this->respond($this->data);
+    }
 }

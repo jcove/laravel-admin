@@ -40,7 +40,7 @@ class LoginController extends Controller
         if ($this->attemptLogin($request)) {
             $user = $this->guard()->user();
             $user->generateToken();
-            $user->setAttribute('password',null);
+
 
             return $this->respond($user);
         }
